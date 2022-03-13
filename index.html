@@ -43,7 +43,7 @@
         var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
         var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
         var userTimeZone = "America/Los_Angeles";
-
+        var dateFormat = "dddd, MMMM Do YYYY"
         // Initializes the client with the API key and the Translate API.
         gapi.client.init({
             'apiKey': apiKey,
@@ -64,7 +64,7 @@
             if (response.result.items) {
                 var calendarRows = ['<table class="wellness-calendar"><tbody>'];
                 response.result.items.forEach(function(entry) {
-                    var startsAt = moment(entry.start.date).format("L");
+                    var startsAt = moment(entry.start.date).format(dateFormat);
                     calendarRows.push(`<tr><td>${startsAt}</td><td>${entry.summary}</td><td>${entry.description}</td></tr>`);
                 });
                 calendarRows.push('</tbody></table>');
