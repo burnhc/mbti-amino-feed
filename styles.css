@@ -11,6 +11,10 @@ body {
     margin-block-end: 0px;
 }
 
+.list-group-item {
+    padding-left: 0px;
+}
+
 .btn {
     font-size: 0.9rem;
 }
