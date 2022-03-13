@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="format-google-calendar.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2/moment.min.js"></script>
+<script src="https://apis.google.com/js/api.js"></script>
+    <script src="scripts.js"></script>
+  </head>
+  <body>
+    <div id="wellness-calendar"></div>
+
+    ```
+    <div id="wrapper">
+        <iframe 
+            width="413" height="451"
+            frameborder="0" 
+            scrolling="no" 
+            src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTdGNNXhR4yVG3Z26gXdwpcQzTbFNVn1sXavdLJU7ziJ0iPu6uXwxj-ha7LIve_8cRI1w-DiFTkBNrJ/pubchart?oid=1905380049&amp;format=interactive">
+        </iframe>
+    </div>
+    <p class="native-header">Upcoming Events</p>
+    <div>
+        <ul class="list-group list-group-flush" id="events-upcoming">
+        </ul>
+    </div>  
+    <p class="native-header">Previous Events</p>
+    <div>
+        <ul class="list-group list-group-flush" id="events-past">
+        </ul>
+    </div>
+    <div style="text-align: center">
+        <a class="btn btn-dark" href="#" role="button">View More</a>
+    </div>
+  </body>
+  <script>
+    /* This solution makes use of "simple access" to google, providing only an API Key.
+    * This way we can only get access to public calendars. To access a private calendar,
+    * we would need to use OAuth 2.0 access.
+    *
+    * "Simple" vs. "Authorized" access: https://developers.google.com/api-client-library/javascript/features/authentication
+    * Examples of "simple" vs OAuth 2.0 access: https://developers.google.com/api-client-library/javascript/samples/samples#authorizing-and-making-authorized-requests
+    *
+    * We will make use of "Option 1: Load the API discovery document, then assemble the request."
+    * as described in https://developers.google.com/api-client-library/javascript/start/start-js
+    */
+    function printCalendar() {
+        // The "Calendar ID" from your calendar settings page, "Calendar Integration" secion:
+        var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
+
+        // 1. Create a project using google's wizzard: https://console.developers.google.com/start/api?id=calendar
+        // 2. Create credentials:
+        //    a) Go to https://console.cloud.google.com/apis/credentials
+        //    b) Create Credentials / API key
+        //    c) Since your key will be called from any of your users' browsers, set "Application restrictions" to "None",
+        //       leave "Website restrictions" blank; you may optionally set "API restrictions" to "Google Calendar API"
+        var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
+        // You can get a list of time zones from here: http://www.timezoneconverter.com/cgi-bin/zonehelp
+        var userTimeZone = "Europe/Budapest";
+
+        // Initializes the client with the API key and the Translate API.
+        gapi.client.init({
+            'apiKey': apiKey,
+            // Discovery docs docs: https://developers.google.com/api-client-library/javascript/features/discovery
+            'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+        }).then(function () {
+            // Use Google's "apis-explorer" for research: https://developers.google.com/apis-explorer/#s/calendar/v3/
+            // Events: list API docs: https://developers.google.com/calendar/v3/reference/events/list
+            return gapi.client.calendar.events.list({
+                'calendarId': calendarId,
+                'timeZone': userTimeZone,
+                'singleEvents': true,
+                'timeMin': (new Date()).toISOString(), //gathers only events not happened yet
+                'maxResults': 20,
+                'orderBy': 'startTime'
+            });
+        }).then(function (response) {
+            if (response.result.items) {
+                var calendarRows = ['<table class="wellness-calendar"><tbody>'];
+                response.result.items.forEach(function(entry) {
+                    var startsAt = moment(entry.start.dateTime).format("L") + ' ' + moment(entry.start.dateTime).format("LT");
+                    var endsAt = moment(entry.end.dateTime).format("LT");
+                    calendarRows.push(`<tr><td>${startsAt} - ${endsAt}</td><td>${entry.summary}</td></tr>`);
+                });
+                calendarRows.push('</tbody></table>');
+                $('#wellness-calendar').html(calendarRows.join(""));
+            }
+        }, function (reason) {
+            console.log('Error: ' + reason.result.error.message);
+        });
+    };
+
+    // Loads the JavaScript client library and invokes `start` afterwards.
+    gapi.load('client', printCalendar);
+</script>
+</html>
