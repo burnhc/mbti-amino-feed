@@ -30,7 +30,7 @@ function printCalendar() {
             response.result.items.forEach((entry) => {
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 calendarRows.push(
-                    `<li class="list-group-item"><strong>${startsAt}:</strong>\n${entry.summary}\n${entry.description}</li>`
+                    `<li class="list-group-item"><strong>${startsAt}:</strong><p>${entry.summary}</p><p>${entry.description}</p></li>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
@@ -46,13 +46,13 @@ $(function() {
     $("#wrapper").each(function() {
         var $wrap = $(this);
         function iframeScaler(){
-            var wrapWidth = $wrap.width(); // width of the wrapper
+            var wrapWidth = $wrap.width();
             var wrapHeight = $wrap.height();
-            var childWidth = $wrap.children("iframe").width(); // width of child iframe
-            var childHeight = $wrap.children("iframe").height(); // child height
+            var childWidth = $wrap.children("iframe").width();
+            var childHeight = $wrap.children("iframe").height();
             var wScale = wrapWidth / childWidth;
             var hScale = wrapHeight / childHeight;
-            var scale = Math.min(wScale,hScale);  // get the lowest ratio
+            var scale = Math.min(wScale,hScale);
             $wrap.children("iframe").css({"transform": "scale("+scale+")", "transform-origin": "left top" });  // set scale
         };
         $(window).on("resize", iframeScaler);
