@@ -19,13 +19,14 @@ function printCalendar() {
         });
     }).then(function (response) {
         if (response.result.items) {
-            var calendarRows = [];
+            var calendarRows = ['<ul class="list-group list-group-flush" id="events-upcoming">'];
             response.result.items.forEach(function(entry) {
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 calendarRows.push(
-                    `<li class="list-group-item><strong>${startsAt}</strong>${entry.summary}<p>${entry.description}</p></li>`
+                    `<li class="list-group-item"><strong>${startsAt}</strong>${entry.summary}<p>${entry.description}</p></li>`
                 );
             });
+            calendarRows.push('</ul>');
             $('#events-upcoming').html(calendarRows.join(""));
         }
     }, function (reason) {
