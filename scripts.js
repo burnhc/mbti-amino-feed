@@ -30,7 +30,7 @@ function printCalendar() {
             response.result.items.forEach((entry) => {
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 calendarRows.push(
-                    `<li class="list-group-item"><strong>${startsAt}:</strong><p>${entry.summary}</p><p>${entry.description}</p></li>`
+                    `<li class="list-group-item"><strong>${startsAt}:</strong><p>${entry.summary}</p><p class="description">${entry.description}</p></li>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
