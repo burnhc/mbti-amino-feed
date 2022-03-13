@@ -1,8 +1,16 @@
 .summary {
 }
 
+.btn-dark {
+    border: none;
+    background-color: #959DAD;
+}
+
+.btn-outline {
+    border: #959DAD
+}
 .native-header {
-    background-color: grey;
+    background-color: #959DAD;
     color: white;
     padding-left: 5px;
 }

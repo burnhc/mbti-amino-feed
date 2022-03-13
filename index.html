@@ -14,7 +14,16 @@
     <script src="scripts.js"></script>
   </head>
   <body>
-    <div id="wellness-calendar"></div>
+    <p class="native-header">Upcoming Events</p>
+    <div>
+        <ul class="list-group list-group-flush" id="events-upcoming">
+        </ul>
+        <div style="text-align: center">
+            <a class="btn btn-dark" href="https://calendar.google.com/calendar/u/0/embed?src=qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com&ctz=America/Los_Angeles&bgcolor=%23959dad&showPrint=0&showCalendars=0&showTitle=0&showTz=0" role="button">View Calendar</a>
+            <a class="btn btn-outline-secondary" href="http://aminoapps.com/p/g9iit7" role="button">Add Your Birthday</a>
+        </div>
+    </div>
+    <p class="native-header" style="margin-top: 30px">Current Types of Members</p>
     <div id="wrapper">
         <iframe 
             width="413" height="451"
@@ -22,15 +31,6 @@
             scrolling="no" 
             src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTdGNNXhR4yVG3Z26gXdwpcQzTbFNVn1sXavdLJU7ziJ0iPu6uXwxj-ha7LIve_8cRI1w-DiFTkBNrJ/pubchart?oid=1905380049&amp;format=interactive">
         </iframe>
-    </div>
-    <p class="native-header">Upcoming Events</p>
-    <div>
-        <ul class="list-group list-group-flush" id="events-upcoming">
-        </ul>
-    </div>  
-    <div style="text-align: center">
-        <a class="btn btn-dark" href="https://calendar.google.com/calendar/u/0/embed?src=qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com&ctz=America/Los_Angeles&bgcolor=%23959dad&showPrint=0&showCalendars=0&showTitle=0&showTz=0" role="button">View Calendar</a>
-        <a class="btn btn-outline-secondary" href="http://aminoapps.com/p/g9iit7" role="button">Add Your Birthday</a>
     </div>
   </body>
   <script>
