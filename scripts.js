@@ -1,3 +1,11 @@
+const today = new Date();
+var dateTodayStartPre = new Date(
+    today.getFullYear(), 
+    today.getMonth(), 
+    today.getDay()
+    );
+dateTodayStartPre.setHours(0,0,0,0);
+const dateTodayStart = dateTodayStartPre.toISOString();
 function printCalendar() {
     var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
     var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
@@ -6,31 +14,28 @@ function printCalendar() {
     gapi.client.init({
         'apiKey': apiKey,
         'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-    }).then(function () {
-        // Use Google's "apis-explorer" for research: https://developers.google.com/apis-explorer/#s/calendar/v3/
-        // Events: list API docs: https://developers.google.com/calendar/v3/reference/events/list
+    }).then(() => {
         return gapi.client.calendar.events.list({
             'calendarId': calendarId,
             'timeZone': userTimeZone,
             'singleEvents': true,
-            'timeMin': (new Date()).toISOString(),
-            'maxResults': 4,
+            'timeMin': dateTodayStart,
+            'maxResults': 2,
             'orderBy': 'startTime'
         });
-    }).then(function (response) {
+    }).then((response) => {
         if (response.result.items) {
-            var calendarRows = ['<ul class="list-group list-group-flush" id="events-upcoming">'];
-            response.result.items.forEach(function(entry) {
+            var calendarRows = [];
+            response.result.items.forEach((entry) => {
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 calendarRows.push(
-                    `<li class="list-group-item"><strong>${startsAt}</strong>${entry.summary}<p>${entry.description}</p></li>`
+                    `<li class="list-group-item"><strong>${startsAt}</strong><p>${entry.summary}</p><p>${entry.description}</p></li>`
                 );
             });
-            calendarRows.push('</ul>');
             $('#events-upcoming').html(calendarRows.join(""));
         }
-    }, function (reason) {
-        console.log('Error: ' + reason.result.error.message);
+    }, (e) => {
+        console.log('Error: ' + e.result.error.message);
     });
 };
 
