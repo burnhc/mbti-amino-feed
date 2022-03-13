@@ -9,9 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="format-google-calendar.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/moment@2/moment.min.js"></script>
-<script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
     <script src="scripts.js"></script>
   </head>
   <body>
@@ -39,43 +38,6 @@
     </div>
   </body>
   <script>
-    function printCalendar() {
-        var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
-        var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
-        var userTimeZone = "America/Los_Angeles";
-        var dateFormat = "dddd, MMMM Do YYYY"
-        // Initializes the client with the API key and the Translate API.
-        gapi.client.init({
-            'apiKey': apiKey,
-            // Discovery docs docs: https://developers.google.com/api-client-library/javascript/features/discovery
-            'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-        }).then(function () {
-            // Use Google's "apis-explorer" for research: https://developers.google.com/apis-explorer/#s/calendar/v3/
-            // Events: list API docs: https://developers.google.com/calendar/v3/reference/events/list
-            return gapi.client.calendar.events.list({
-                'calendarId': calendarId,
-                'timeZone': userTimeZone,
-                'singleEvents': true,
-                'timeMin': (new Date()).toISOString(),
-                'maxResults': 20,
-                'orderBy': 'startTime'
-            });
-        }).then(function (response) {
-            if (response.result.items) {
-                var calendarRows = ['<table class="wellness-calendar"><tbody>'];
-                response.result.items.forEach(function(entry) {
-                    var startsAt = moment(entry.start.date).format(dateFormat);
-                    calendarRows.push(`<tr><td>${startsAt}</td><td>${entry.summary}</td><td>${entry.description}</td></tr>`);
-                });
-                calendarRows.push('</tbody></table>');
-                $('#wellness-calendar').html(calendarRows.join(""));
-            }
-        }, function (reason) {
-            console.log('Error: ' + reason.result.error.message);
-        });
-    };
 
-    // Loads the JavaScript client library and invokes `start` afterwards.
-    gapi.load('client', printCalendar);
 </script>
 </html>

@@ -1,28 +1,39 @@
-const dateNow = new Date();
-var dateYest = new Date(
-    dateNow.getFullYear(), 
-    dateNow.getMonth(), 
-    dateNow.getDay() - 1);
-dateYest.setHours(0,0,0,0);
-const dateYesterday = dateYest.toISOString();
-const dateEndOfMonth = new Date(
-    dateNow.getFullYear(),
-    dateNow.getMonth() + 1, 
-    0).toISOString();
+function printCalendar() {
+    var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
+    var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
+    var userTimeZone = "America/Los_Angeles";
+    var dateFormat = "dddd, MMMM Do"
+    gapi.client.init({
+        'apiKey': apiKey,
+        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
+    }).then(function () {
+        // Use Google's "apis-explorer" for research: https://developers.google.com/apis-explorer/#s/calendar/v3/
+        // Events: list API docs: https://developers.google.com/calendar/v3/reference/events/list
+        return gapi.client.calendar.events.list({
+            'calendarId': calendarId,
+            'timeZone': userTimeZone,
+            'singleEvents': true,
+            'timeMin': (new Date()).toISOString(),
+            'maxResults': 4,
+            'orderBy': 'startTime'
+        });
+    }).then(function (response) {
+        if (response.result.items) {
+            var calendarRows = [];
+            response.result.items.forEach(function(entry) {
+                var startsAt = moment(entry.start.date).format(dateFormat);
+                calendarRows.push(
+                    `<li class="list-group-item><strong>${startsAt}</strong>${entry.summary}<p>${entry.description}</p></li>`
+                );
+            });
+            $('#events-upcoming').html(calendarRows.join(""));
+        }
+    }, function (reason) {
+        console.log('Error: ' + reason.result.error.message);
+    });
+};
 
-formatGoogleCalendar.init({
-    calendarUrl: 'https://www.googleapis.com/calendar/v3/calendars/qg38jvjp72hjpbfbrhjf2c0afo%40group.calendar.google.com/events?key=AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY',
-    past: true,
-    upcoming: true,
-    upcomingTopN: 2,
-    pastTopN: 2,
-    itemsTagName: 'li class="list-group-item"',
-    upcomingSelector: '#events-upcoming',
-    pastSelector: "#events-past",
-    format: ['<strong>', '*date*', '</strong>: ', '*summary*', ' &#10; ', '*description*', ' in ', '*location*'],
-    timeMin: dateYesterday,
-    timeMax: dateEndOfMonth,
-});
+gapi.load('client', printCalendar);
 
 $(function() {
     $("#wrapper").each(function() {
