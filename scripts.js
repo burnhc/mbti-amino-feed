@@ -2,10 +2,11 @@ const today = new Date();
 var dateTodayStartPre = new Date(
     today.getFullYear(), 
     today.getMonth(), 
-    today.getDay()
+    today.getDate()
     );
 dateTodayStartPre.setHours(0,0,0,0);
 const dateTodayStart = dateTodayStartPre.toISOString();
+
 function printCalendar() {
     var calendarId = 'qg38jvjp72hjpbfbrhjf2c0afo@group.calendar.google.com';
     var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
@@ -29,7 +30,7 @@ function printCalendar() {
             response.result.items.forEach((entry) => {
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 calendarRows.push(
-                    `<li class="list-group-item"><strong>${startsAt}: </strong>\n${entry.summary}\n${entry.description}</li>`
+                    `<li class="list-group-item"><strong>${startsAt}:</strong>\n${entry.summary}\n${entry.description}</li>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
