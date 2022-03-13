@@ -63,7 +63,7 @@
         //       leave "Website restrictions" blank; you may optionally set "API restrictions" to "Google Calendar API"
         var apiKey = 'AIzaSyDn_bqbC3NViutpZJ5vaFVG-aRbm-oXFsY';
         // You can get a list of time zones from here: http://www.timezoneconverter.com/cgi-bin/zonehelp
-        var userTimeZone = "Europe/Budapest";
+        var userTimeZone = "America/Los_Angeles";
 
         // Initializes the client with the API key and the Translate API.
         gapi.client.init({
@@ -85,9 +85,8 @@
             if (response.result.items) {
                 var calendarRows = ['<table class="wellness-calendar"><tbody>'];
                 response.result.items.forEach(function(entry) {
-                    var startsAt = moment(entry.start.dateTime).format("L") + ' ' + moment(entry.start.dateTime).format("LT");
-                    var endsAt = moment(entry.end.dateTime).format("LT");
-                    calendarRows.push(`<tr><td>${startsAt} - ${endsAt}</td><td>${entry.summary}</td></tr>`);
+                    var startsAt = moment(entry.start.date).format("L");
+                    calendarRows.push(`<tr><td>${startsAt}</td><td>${entry.summary}</td></tr>`);
                 });
                 calendarRows.push('</tbody></table>');
                 $('#wellness-calendar').html(calendarRows.join(""));
