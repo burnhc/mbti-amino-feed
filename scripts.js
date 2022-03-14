@@ -5,12 +5,6 @@ function onChartReady() {
     chartReady = true;
 }
 
-function onCalendarReady() {
-    calendarReady = true;
-}
-
-setReadyListener();
-
 function setReadyListener() {
     const readyListener = () => {
       if (chartReady && calendarReady) {
@@ -21,6 +15,8 @@ function setReadyListener() {
     };
     readyListener();
 }
+
+setReadyListener();
 
 const today = new Date();
 var dateTodayStartPre = new Date(
