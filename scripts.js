@@ -8,8 +8,8 @@ function onChartReady() {
 function setReadyListener() {
     const readyListener = () => {
       if (chartReady && calendarReady) {
-        $(".loader").delay(100).fadeOut("slow");
-        $("#loading-overlay").delay(100).fadeOut("slow");
+        $(".loader").delay(100).hide();
+        $("#loading-overlay").delay(100).hide();
       }
       return setTimeout(readyListener, 250);
     };
