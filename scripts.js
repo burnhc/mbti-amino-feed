@@ -1,3 +1,8 @@
+$(document).ready(function() {
+    $(".loader").delay(100).fadeOut("slow");
+    $("#loading-overlay").delay(100).fadeOut("slow");
+  });
+
 const today = new Date();
 var dateTodayStartPre = new Date(
     today.getFullYear(), 
