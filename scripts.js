@@ -1,7 +1,26 @@
-$(document).ready(function() {
-    $(".loader").delay(100).fadeOut("slow");
-    $("#loading-overlay").delay(100).fadeOut("slow");
-  });
+let chartReady = false;
+let calendarReady = false;
+
+function onChartReady() {
+    chartReady = true;
+}
+
+function onCalendarReady() {
+    calendarReady = true;
+}
+
+setReadyListener();
+
+function setReadyListener() {
+    const readyListener = () => {
+      if (chartReady && calendarReady) {
+        $(".loader").delay(100).fadeOut("slow");
+        $("#loading-overlay").delay(100).fadeOut("slow");
+      }
+      return setTimeout(readyListener, 250);
+    };
+    readyListener();
+}
 
 const today = new Date();
 var dateTodayStartPre = new Date(
@@ -39,6 +58,7 @@ function printCalendar() {
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
+            calendarReady = true;
         }
     }, (e) => {
         console.log('Error: ' + e.result.error.message);
