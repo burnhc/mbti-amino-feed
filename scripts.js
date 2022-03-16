@@ -53,7 +53,7 @@ function printCalendar() {
                 var description = entry.description;
                 var startsAt = moment(entry.start.date).format(dateFormat);
                 
-                if (summary.indexAt(0) === "🎈") {
+                if (summary.indexOf("🎈") === 0) {
                     summary = summary.replace("🎈", `<i class="fas fa-cake-candles fa-fw"></i>`);
                     var profileLink = description.slice(9, description.indexOf(`">Go to `)).replace(/\//g, '\\');
                     description = description.slice(description.indexOf(`'s profile »</a>`) + 16);
