@@ -48,9 +48,18 @@ function printCalendar() {
         if (response.result.items) {
             var calendarRows = [];
             response.result.items.forEach((entry) => {
+                var calendarRow = '<li class="list-group-item">';
+                var summary = entry.summary;
+                var description = entry.description;
                 var startsAt = moment(entry.start.date).format(dateFormat);
+
+                if (summary.charAt(0) == '🎈') {
+                    summary.replace("🎈", `<i class="fas fa-balloon fa-fw"></i>`);
+                    var profileLink = description.slice(8, description.indexOf(`"> Go to `));
+                    console.log(profileLink);
+                }
                 calendarRows.push(
-                    `<li class="list-group-item"><strong>${startsAt}:</strong><p>${entry.summary}</p><p class="description">${entry.description}</p></li>`
+                    calendarRow + `<h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p class="description">${description}</p></li>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
