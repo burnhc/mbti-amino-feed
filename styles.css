@@ -7,9 +7,6 @@ body {
     font-size: 0.9rem !important;
     color: rgb(31, 31, 31);
 }
-.description {
-    margin-block-end: 0px;
-}
 
 .mb-1 {
   line-height: 1rem;
