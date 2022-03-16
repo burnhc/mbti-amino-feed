@@ -48,17 +48,20 @@ function printCalendar() {
         if (response.result.items) {
             var calendarRows = [];
             response.result.items.forEach((entry) => {
+                var calendarRow = '';
                 var summary = entry.summary;
                 var description = entry.description;
                 var startsAt = moment(entry.start.date).format(dateFormat);
+                
+                if (summary.indexAt(0) === "🎈") {
+                    summary = summary.replace("🎈", `<i class="fas fa-cake-candles fa-fw"></i>`);
+                    var profileLink = description.slice(9, description.indexOf(`">Go to `)).replace(/\//g, '\\');
+                    description = description.slice(description.indexOf(`'s profile »</a>`) + 16);
+                    console.log(profileLink, description)
+                    calendarRow = `<a href="${profileLink}" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p>${description}</p></a>`
+                }
 
-                summary = summary.replace("🎈", `<i class="fas fa-balloon fa-fw"></i>`);
-                var profileLink = description.slice(9, description.indexOf(`">Go to `)).replace(/\//g, '\\');
-                description = description.slice(description.indexOf(`'s profile »</a>`) + 16);
-                console.log(profileLink, description)
-                calendarRows.push(
-                    `<a href="${profileLink}" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p>${description}</p></a>`
-                );
+                calendarRows.push(calendarRow);
             });
             $('#events-upcoming').html(calendarRows.join(""));
             calendarReady = true;
