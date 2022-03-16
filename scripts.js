@@ -61,7 +61,7 @@ function printCalendar() {
                     calendarRow = 
                         `<a href="${profileLink}" class="list-group-item list-group-item-action">
                         <h6 class="mb-1 w-100">${startsAt}:</h6>
-                        <p class="mb-1">${summary}</p><small class="small-go-to-button">Go to profile</small>
+                        <p class="mb-1">${summary}<span class="small-go-to-button">Go to profile</span></p>
                         <p class="mb-1">${description}</p></a>`
                 }
 
