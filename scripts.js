@@ -58,7 +58,12 @@ function printCalendar() {
                     var profileLink = description.slice(9, description.indexOf(`">Go to `)).replace(/\//g, '\\');
                     description = description.slice(description.indexOf(`'s profile »</a>`) + 16);
                     console.log(profileLink, description)
-                    calendarRow = `<a href="${profileLink}" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p>${description}</p></a>`
+                    calendarRow = 
+                        `<a href="${profileLink}" class="list-group-item list-group-item-action">
+                        <h6 class="mb-1 w-100">${startsAt}:</h6>
+                        <p class="mb-1">${summary}</p>
+                        <p class="mb-1">${description}</p></a>
+                        <small class="text-muted">Go to their profile.</small>`
                 }
 
                 calendarRows.push(calendarRow);
