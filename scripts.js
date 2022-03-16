@@ -54,11 +54,11 @@ function printCalendar() {
 
                 if (summary.charAt(0) === '🎈') {
                     summary = summary.replace("🎈", `<i class="fas fa-balloon fa-fw"></i>`);
-                    var profileLink = description.slice(8, description.indexOf(`"> Go to `));
-                    console.log(profileLink);
+                    var profileLink = description.slice(8, description.indexOf(`">Go to `));
+                    description = description.slice(description.lastIndexOf(`"'s profile »</a>`));
                 }
                 calendarRows.push(
-                    `<a href="#" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}${description}</p></a>`
+                    `<a href="${profileLink}" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p></a>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
