@@ -60,7 +60,7 @@ function printCalendar() {
                     console.log(profileLink, description)
                     calendarRow = 
                         `<a href="${profileLink}" class="list-group-item list-group-item-action">
-                        <h6 class="mb-1 w-100">${startsAt}:</h6>
+                        <h6 class="mb-2">${startsAt}:</h6>
                         <p class="mb-1">${summary}<span class="small-go-to-button">Profile</span></p>
                         <p class="mb-1">${description}</p></a>`
                 }
