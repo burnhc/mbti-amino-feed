@@ -79,6 +79,12 @@ body {
 .btn-outline {
     border: #959DAD
 }
+
+.btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .native-header {
     background-color: #959DAD;
     color: white;
