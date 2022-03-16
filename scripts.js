@@ -58,7 +58,7 @@ function printCalendar() {
                     console.log(profileLink);
                 }
                 calendarRows.push(
-                    `<a href="#" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p></a>`
+                    `<a href="#" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}${description}</p></a>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
