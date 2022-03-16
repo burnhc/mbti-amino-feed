@@ -48,7 +48,6 @@ function printCalendar() {
         if (response.result.items) {
             var calendarRows = [];
             response.result.items.forEach((entry) => {
-                var calendarRow = '<a href="#" class="list-group-item list-group-item list-group-item-action flex-column align-items-start"><div class="d-flex w-100 justify-content-between">';
                 var summary = entry.summary;
                 var description = entry.description;
                 var startsAt = moment(entry.start.date).format(dateFormat);
@@ -59,7 +58,7 @@ function printCalendar() {
                     console.log(profileLink);
                 }
                 calendarRows.push(
-                    calendarRow + `<h6 class="mb-1">${startsAt}:</h6></div><p class="mb-1">${summary}</p><p>${description}</p></a>`
+                    `<a href="#" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p>${description}</p></a>`
                 );
             });
             $('#events-upcoming').html(calendarRows.join(""));
