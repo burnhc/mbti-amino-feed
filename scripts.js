@@ -54,7 +54,7 @@ function printCalendar() {
 
                 summary = summary.replace("🎈", `<i class="fas fa-balloon fa-fw"></i>`);
                 var profileLink = description.slice(8, description.indexOf(`">Go to `));
-                description = description.slice(description.lastIndexOf(`'s profile »</a>`));
+                description = description.slice(description.indexOf(`'s profile »</a>` + 16));
                 
                 calendarRows.push(
                     `<a href="${profileLink}" class="list-group-item list-group-item-action"><h6 class="mb-1">${startsAt}:</h6><p class="mb-1">${summary}</p><p>${description}</p></a>`
